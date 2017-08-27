@@ -2,24 +2,30 @@
 
 class StringCalculator
 {
+    const MAX_NUMBER_ALLOWED = 1000;
 
     public function add($numbers = '')
     {
         $result = 0;
-        $numbers = preg_split("/(,|\n)/", $numbers);
-
+        $numbers = $this->parseNumbers($numbers);
 
         foreach ($numbers as $number) {
             $this->validateNumber($number);
 
-            $result += (int) $number >= 1000 ? 0 : (int) $number;
+            $result += $number >= self::MAX_NUMBER_ALLOWED ? 0 : $number;
         }
 
         return $result;
     }
 
-    private function validateNumber()
+    private function validateNumber($number)
     {
-        if ($number < 0) throw new InvalidArgumentException('Invalid number provided: ' . $number);
+        if ($number < 0)
+                throw new InvalidArgumentException('Invalid number provided: ' . $number);
+    }
+
+    private function parseNumbers($numbers)
+    {
+        return array_map('intval', preg_split("/(,|\n)/", $numbers));
     }
 }
