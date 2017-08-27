@@ -2,9 +2,8 @@
 
 namespace spec;
 
-use StringCalculator;
+use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class StringCalculatorSpec extends ObjectBehavior
 {
@@ -29,7 +28,12 @@ class StringCalculatorSpec extends ObjectBehavior
         $this->add('1,2,3')->shouldEqual(6);
     }
 
-    function it_disallowns_negative_numbers(){
-        $this->add('1,2,-3,4')->shouldEquals(4);
+    function it_disallowns_negative_numbers()
+    {
+        $this->shouldThrow(new InvalidArgumentException('Invalid number provided: -3'))->duringAdd('1,2,-3');
+    }
+
+    function it_ignores_if_number_is_gt_or_equal_1000(){
+        $this->add('1,2,3,1000,1001')->shouldEqual(6);
     }
 }
