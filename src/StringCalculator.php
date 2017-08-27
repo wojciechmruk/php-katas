@@ -10,11 +10,16 @@ class StringCalculator
 
 
         foreach ($numbers as $number) {
-            if ($number < 0) throw new InvalidArgumentException('Invalid number provided: ' . $number);
-            
+            $this->validateNumber($number);
+
             $result += (int) $number >= 1000 ? 0 : (int) $number;
         }
 
         return $result;
+    }
+
+    private function validateNumber()
+    {
+        if ($number < 0) throw new InvalidArgumentException('Invalid number provided: ' . $number);
     }
 }
