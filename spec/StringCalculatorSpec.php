@@ -28,4 +28,8 @@ class StringCalculatorSpec extends ObjectBehavior
     {
         $this->add('1,2,3')->shouldEqual(6);
     }
+
+    function it_disallowns_negative_numbers(){
+        $this->add('1,2,-3,4')->shouldEquals(4);
+    }
 }
