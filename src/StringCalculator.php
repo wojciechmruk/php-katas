@@ -5,9 +5,18 @@ class StringCalculator
 
     public function add($numbers = '')
     {
-        if (intval($numbers) > 0) {
-            return intval($numbers);
+
+        if (empty($numbers)) {
+            return 0;
         }
-        return 0;
+
+        $numbers = preg_split("/(,|\n)/", $numbers);
+
+        $result = 0;
+        foreach ($numbers as $number) {
+            $result += $number;
+        }
+
+        return $result;
     }
 }
