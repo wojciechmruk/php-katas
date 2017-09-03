@@ -19,35 +19,57 @@ class TennisScores
 
     public function score()
     {
-        if ($this->moreThan3Points()) {
-            if ($this->player1->points >= $this->player2->points + 2) {
-                return 'Player 1 Won';
-            }
 
-            if ($this->player2->points >= $this->player1->points + 2) {
-                return 'Player 2 Won';
-            }
-
-            if ($this->player2->points === $this->player1->points) {
-                return 'Deuce';
-            }
-
-            if ($this->player1->points >= $this->player2->points + 1) {
-                return 'Adventage Player 1';
-            }
-
-            if ($this->player2->points >= $this->player1->points + 1) {
-                return 'Adventage Player 2';
-            }
+        if ($this->hasAWinner()) {
+            return 'Win for ' . $this->winner()->name;
         }
 
-        if ($this->player2->points != $this->player1->points) {
-            return $this->map[$this->player1->points] . '-' . $this->map[$this->player2->points];
+        if ($this->hasTheAdvantage()) {
+            return 'Advantage ' . $this->winner()->name;
         }
 
-        if ($this->player2->points === $this->player1->points) {
-            return $this->map[$this->player1->points] . '-All';
+        if ($this->inDeuce()) {
+            return 'Deuce';
         }
+
+        $general_result = $this->map[$this->player1->points] . '-';
+
+        return $general_result .= $this->tied() ? 'All' : $this->map[$this->player2->points];
+    }
+
+    protected function hasAWinner()
+    {
+        return $this->hasEnoughPointsToBeWon() && $this->isLeadingByTwo();
+    }
+
+    protected function hasEnoughPointsToBeWon()
+    {
+        return max([$this->player1->points, $this->player2->points]) > 3;
+    }
+
+    protected function inDeuce()
+    {
+        return $this->player1->points + $this->player2->points >= 6 && $this->tied();
+    }
+
+    protected function tied()
+    {
+        return $this->player1->points == $this->player2->points;
+    }
+
+    protected function isLeadingByTwo()
+    {
+        return (abs($this->player1->points - $this->player2->points) >= 2);
+    }
+
+    protected function winner()
+    {
+        return $this->player1->points > $this->player2->points ? $this->player1 : $this->player2;
+    }
+
+    protected function hasTheAdvantage()
+    {
+        return $this->hasEnoughPointsToBeWon() && (abs($this->player1->points - $this->player2->points) == 1);
     }
 
     protected function moreThan3Points()

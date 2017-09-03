@@ -56,11 +56,11 @@ class TennisScoresSpec extends ObjectBehavior
         $this->score()->shouldReturn('Thirty-All');
     }
 
-    function it_scores_a_3_3_as_forty_love()
+    function it_scores_a_3_3_as_deuce()
     {
         $this->john->earnPoints(3);
         $this->jane->earnPoints(3);
-        $this->score()->shouldReturn('Forty-All');
+        $this->score()->shouldReturn('Deuce');
     }
 
     function it_scores_a_2_1_as_thirty_fifteen()
@@ -80,21 +80,21 @@ class TennisScoresSpec extends ObjectBehavior
     function it_scores_a_4_0_as_player1_won()
     {
         $this->john->earnPoints(4);
-        $this->score()->shouldReturn('Player 1 Won');
+        $this->score()->shouldReturn('Win for John');
     }
 
     function it_scores_a_4_1_as_player1_won()
     {
         $this->john->earnPoints(4);
         $this->jane->earnPoints(1);
-        $this->score()->shouldReturn('Player 1 Won');
+        $this->score()->shouldReturn('Win for John');
     }
 
     function it_scores_a_1_4_as_player2_won()
     {
         $this->john->earnPoints(1);
         $this->jane->earnPoints(4);
-        $this->score()->shouldReturn('Player 2 Won');
+        $this->score()->shouldReturn('Win for Jane');
     }
 
     function it_scores_a_4_4_as_Deuce()
@@ -108,27 +108,27 @@ class TennisScoresSpec extends ObjectBehavior
     {
         $this->john->earnPoints(8);
         $this->jane->earnPoints(6);
-        $this->score()->shouldReturn('Player 1 Won');
+        $this->score()->shouldReturn('Win for John');
     }
 
     function it_scores_a_9_11_as_Player_2_won()
     {
         $this->john->earnPoints(9);
         $this->jane->earnPoints(11);
-        $this->score()->shouldReturn('Player 2 Won');
+        $this->score()->shouldReturn('Win for Jane');
     }
     
     function it_scores_a_5_4_as_Advantage_Player_1()
     {
         $this->john->earnPoints(5);
         $this->jane->earnPoints(4);
-        $this->score()->shouldReturn('Adventage Player 1');
+        $this->score()->shouldReturn('Advantage John');
     }
 
     function it_scores_a_7_8_as_Advantage_Player_2()
     {
         $this->john->earnPoints(7);
         $this->jane->earnPoints(8);
-        $this->score()->shouldReturn('Adventage Player 2');
+        $this->score()->shouldReturn('Advantage Jane');
     }
 }
